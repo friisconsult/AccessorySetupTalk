@@ -9,27 +9,41 @@ import Foundation
 import CoreBluetooth
 import OSLog
 
+/// This controller handles all the BLE connection in a pre __iOS 18__ way, setting up the CentralManager
+/// and handling all the connection....
 @Observable class BLEController: NSObject {
-    let centralManger: CBCentralManager
+    
+    /// way to let the UI know if the search is active
     var isScanning: Bool = false
+    
+    /// A list of the current discovered BLE peripherals, not maintained, meaning that devices that are out of reach, might still be listet
     var peripherals: [CBPeripheral] = []
+    
+    /// The current connected Peripheral
     var peripheral: CBPeripheral?
+    
+    private let centralManger: CBCentralManager
     
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "\(BLEController.self)")
     
+    /// One way is to instantiate the CentralManager in the Init, this trickers a "Request for access BLE", that can be anoying, and therefor might have some
+    /// other implementation. this is outside this sample.
     override init() {
         self.centralManger = CBCentralManager(delegate: nil, queue: nil)
         super.init()
+        
         self.centralManger.delegate = self
     }
     
     
+    /// Start the scanning for BLE devices with required services
+    /// - throws: ``BluetoothError/powerOnTimeout`` if the power on state is not commin on within 1 second.
     func scan() async throws {
         guard !centralManger.isScanning else {
             logger.notice("Already scanning")
             return
         }
-        
+                
         var count = 0
         while centralManger.state != .poweredOn {
             try await Task.sleep(for: .milliseconds(100))
@@ -43,11 +57,14 @@ import OSLog
         self.isScanning = centralManger.isScanning
     }
     
+    /// Stop the scan
     func stopScan() {
         centralManger.stopScan()
         self.isScanning = centralManger.isScanning
     }
     
+    /// Connect to a BLE peripheral
+    /// - Parameter peripheral: The selected peripheral
     func connect(_ peripheral: CBPeripheral) {
         if self.peripheral != nil {
             cancelConnection()
@@ -58,6 +75,7 @@ import OSLog
         centralManger.connect(peripheral)
     }
     
+    /// Close the connection to the current BLE peripheral if any
     func cancelConnection() {
         guard let peripheral else {
             return
@@ -70,7 +88,6 @@ import OSLog
 }
 
 // MARK: BLE cental manager delegate implementation
-
 extension BLEController: CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state != .poweredOn {
@@ -118,14 +135,24 @@ extension CBPeripheral: @retroactive Identifiable {
 }
 
 extension CBUUID {
+    /// Device service for the ESP32C3 device
+    /// - note: The usage of "device services" is more a benefit to the AccessoryKit later, as I have normally just used a
+    /// functional Service like a GNSS service, _not caring_ if the device is one or another, as long as it has the Services and Characteristic that I need...
     static var esp32c3Service = CBUUID(string: "A1172B0F-498F-4895-861F-F333A44975C7")
+    
+    /// Device service for the ESP32S3 device
+    /// - note: see note for ``esp32c3Service``
     static var esp32s3Service = CBUUID(string: "A1172B0F-498F-4895-861F-F333A44975C8")
 }
 
 extension Array where Element == CBUUID {
+    /// just a convient way of listing the services that are to be searched for
     static let services: [CBUUID] = [.esp32c3Service, .esp32s3Service]
 }
 
+/// I almost aways used __throwing__ as I like the way to throw erros and handle errors. this elimate the usage of return results, and optional returns
 enum BluetoothError: Error {
+    
+    /// The BLE Central Manager, didn't get into "power on" mode
     case powerOnTimeout
 }
