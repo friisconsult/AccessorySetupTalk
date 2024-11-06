@@ -10,11 +10,15 @@ import CoreBluetooth
 
 struct ContentView: View {
     var body: some View {
+        #if PRE18
+        BluetoothConnectionView()
+        #else
         if #available(iOS 18, *) {
             AccessorySetupView()
         } else {
             BluetoothConnectionView()            
         }
+        #endif
     }
 }
 

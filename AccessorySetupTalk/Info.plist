@@ -10,6 +10,7 @@
 	<key>NSAccessorySetupKitSupports</key>
 	<array>
 		<string>Bluetooth</string>
+		<string>WiFi</string>
 	</array>
 </dict>
 </plist>

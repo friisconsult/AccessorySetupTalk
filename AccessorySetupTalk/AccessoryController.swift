@@ -42,7 +42,7 @@ import OSLog
     }
     
     func presentPicker() async throws {
-        try await session.showPicker(for: Self.blePickerDisplayItems)
+        try await session.showPicker(for: Self.allPickerDisplayItems)
     }
     
     

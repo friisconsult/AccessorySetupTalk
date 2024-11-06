@@ -33,6 +33,7 @@ import OSLog
         super.init()
         
         self.centralManger.delegate = self
+        logger.info("central: \(CBCentralManager.authorization.rawValue)")
     }
     
     
@@ -93,6 +94,8 @@ extension BLEController: CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if central.state != .poweredOn {
             logger.warning("Bluetooth is not powered on")
+        } else {
+            logger.info("Bluetooth is powered on")
         }
     }
     
