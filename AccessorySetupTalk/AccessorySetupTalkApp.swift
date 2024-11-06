@@ -9,11 +9,9 @@ import SwiftUI
 
 @main
 struct AccessorySetupTalkApp: App {
-    @State var controller = BLEController()
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(controller)
         }
     }
 }

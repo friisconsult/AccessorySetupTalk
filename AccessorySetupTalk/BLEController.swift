@@ -41,6 +41,7 @@ import OSLog
     func scan() async throws {
         guard !centralManger.isScanning else {
             logger.notice("Already scanning")
+            self.isScanning = centralManger.isScanning
             return
         }
                 

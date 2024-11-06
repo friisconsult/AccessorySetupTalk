@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "XAIO-ESP32-C3-WiFi.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
