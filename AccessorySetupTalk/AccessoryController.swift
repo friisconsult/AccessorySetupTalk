@@ -21,7 +21,7 @@ import OSLog
     private var centralDelegate = CentralManagerDelegeate()
     
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "\(AccessoryController.self)")
-    
+    private var migrationItems: [ASMigrationDisplayItem] = []
     
     /// Once again we do have some issues activating the session in the init, not as annoying as CBCentalManager, as when using the AccessorySetupKit, the user is not asked about the BLE permission
     /// but it will try to reconnect to already set up devices! if this is what we want, it is fine, but else we shold wait to activate the sesion untill we are ready for it.
@@ -42,6 +42,7 @@ import OSLog
     }
     
     func presentPicker() async throws {
+        
         try await session.showPicker(for: Self.allPickerDisplayItems)
     }
     
@@ -68,7 +69,9 @@ import OSLog
         
         switch event.eventType {
         case .activated:
-            logger.info("This is a prevously discoverd accessory, you can connect to it...")
+            logger.info("Session activated")
+            //logger.info("This is a prevously discoverd accessory, you can connect to it...")
+            
             
         case .accessoryAdded:
             logger.info("A new accessory was added")
@@ -88,7 +91,6 @@ import OSLog
             if let accessory = self.accessory {
                 self.connect(accessory)
             }
-            // the rest is not handled in this talk
             
         case .invalidated:
             logger.critical("the session was invalidated")
