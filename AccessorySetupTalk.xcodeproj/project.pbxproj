@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		DA43199F2CE35B9C00508BAC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DA43199E2CE35B9C00508BAC /* README.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		DA2DFDA42CDA0FD400BEA494 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		DA2DFD932CDA0FD300BEA494 /* AccessorySetupTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccessorySetupTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA2DFDA32CDA0FD400BEA494 /* AccessorySetupTalkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessorySetupTalkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA2DFDAD2CDA0FD400BEA494 /* AccessorySetupTalkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccessorySetupTalkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA43199E2CE35B9C00508BAC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -88,6 +93,7 @@
 		DA2DFD8A2CDA0FD300BEA494 = {
 			isa = PBXGroup;
 			children = (
+				DA43199E2CE35B9C00508BAC /* README.md */,
 				DA2DFD952CDA0FD300BEA494 /* AccessorySetupTalk */,
 				DA2DFDA62CDA0FD400BEA494 /* AccessorySetupTalkTests */,
 				DA2DFDB02CDA0FD400BEA494 /* AccessorySetupTalkUITests */,
@@ -225,6 +231,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA43199F2CE35B9C00508BAC /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
